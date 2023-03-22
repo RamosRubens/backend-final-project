@@ -1,7 +1,16 @@
 const express = require('express');
 
+const journey = require('./api/journeys/routes')
+const course = require('./api/courses/routes')
+
 const app = express();
-app.use(express.json());
+const router = express.Router();
+
+router.use(express.json());
+router.use('/journeys', journey);
+router.use('/courses', course)
+
+app.use('/api', router);
 
 app.get('/', (_, res) => {
   return res.json({
