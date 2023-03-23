@@ -25,6 +25,32 @@ const getCoursesInJourney = async(req, res) => {
   res.status(200).send(courses)
 }
 
+const getCourse = async(req, res) => {
+
+  const id = req.params.id
+
+  const courses = await repository.getACourseInAJorney(id)
+  const lessons = await repository.getLessonsInACourse(id)
+
+  const completedCourse = prepareCourseObject(...courses, lessons)
+
+  console.log(completedCourse)
+  res.status(200).send(completedCourse)
+}
+
+const prepareCourseObject = (courses, lessons) => ({
+  id: courses.id,
+  journey_id: courses.journey_id,
+  name: courses.name,
+  courseDescription: courses.description,
+  thumb: courses.thumb,
+  instructor: courses.instructor,
+  level: courses.level,
+  slug: courses.slug,
+  lessons: lessons
+})
+
+router.get('/:id/lessons', validate(GetCoursesInJourneySchema), withAsyncErrorHandler(getCourse))
 router.get('/:id', validate(GetCoursesInJourneySchema), withAsyncErrorHandler(getCoursesInJourney))
 
 module.exports = router
