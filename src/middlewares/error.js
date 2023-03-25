@@ -31,33 +31,6 @@ const responseMappers = {
       cause: [],
     }
   }),
-  [AuthenticatorError.name]: (error) => ({
-    status: 401,
-    body: {
-      statusCode: 401,
-      error: AuthenticatorError.name,
-      message: error.message,
-      cause: error.cause
-    }
-  }),
-  [AuthorizationError.name]: (error) => ({
-    status: 403,
-    body: {
-      statusCode: 403,
-      error: AuthorizationError.name,
-      message: error.message,
-      cause: error.cause
-    }
-  }),
-  UnauthorizedError: (error) => ({
-    status: 401,
-    body: {
-      statusCode: 401,
-      error: AuthenticatorError.name,
-      message: error.message,
-      cause: 'Invalid Token'
-    }
-  }),
   default: (error) => ({
     status: 500,
     body: {

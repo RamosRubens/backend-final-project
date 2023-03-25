@@ -34,7 +34,6 @@ const getCourse = async(req, res) => {
 
   const completedCourse = prepareCourseObject(...courses, lessons)
 
-  console.log(completedCourse)
   res.status(200).send(completedCourse)
 }
 
