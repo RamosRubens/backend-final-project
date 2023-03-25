@@ -9,9 +9,11 @@ const router = Router()
 
 const { CoursesRepository } = require('../courses/repository')
 const { JourneyRepository } = require('../journeys/repository')
+const { LessonsRepository } = require('../lessons/repository')
 
 const coursesRepository = CoursesRepository()
 const journeyRepository = JourneyRepository()
+const lessonsRepository = LessonsRepository()
 
 const ParamTypes = {
   JOURNEYS: 'journeys',
@@ -52,6 +54,33 @@ const getResource = async(req, res) => {
   }
 }
 
+const postResource = async(req, res) => {
+
+  const listType = req.body.listType
+
+  validatePost(listType)
+
+  switch (listType) {
+    case ParamTypes.JOURNEYS:
+      journeyRepository
+        .list()
+        .then(journeys => res.status(200).send({journeys}))
+      break;
+
+    case ParamTypes.COURSES:
+      coursesRepository
+        .listCourses()
+        .then(courses => res.status(200).send({courses}))
+
+      break;
+    case ParamTypes.LESSONS:
+      lessonsRepository
+        .list()
+        .then(lessons => res.status(200).send({lessons}))
+      break;
+  }
+}
+
 const validateRequest = (resourceName, id) => {
 
   if (!Object.values(ParamTypes).includes(resourceName)) {
@@ -71,6 +100,12 @@ const validateRequest = (resourceName, id) => {
   }
 }
 
+const validatePost = (paramType) => {
+  if (!Object.values(ParamTypes).includes(paramType)) {
+    throw new NotFoundError({paramType, paramType})
+ }
+}
+
 const prepareCourseObject = (courses, lessons) => ({
   id: courses.id,
   journey_id: courses.journey_id,
@@ -84,5 +119,6 @@ const prepareCourseObject = (courses, lessons) => ({
 })
 
 router.get('/', withAsyncErrorHandler(getResource))
+router.post('/', withAsyncErrorHandler(postResource))
 
 module.exports = router

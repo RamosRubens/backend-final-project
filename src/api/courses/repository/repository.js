@@ -1,6 +1,24 @@
 const { knex: Knex } = require('knex')
 const config = require('../../../../knexfile');
 
+const decodeCourse = ({
+  id,
+  title,
+  description,
+  thumb,
+  instructor,
+  level,
+  slug
+}) => ({
+  id,
+  title,
+  description,
+  thumb,
+  instructor,
+  level,
+  slug
+})
+
 const decodeCourseInJourney = ({
   id,
   journey_id,
@@ -33,6 +51,8 @@ const decodeLessons = ({
   courseDescription: description
 })
 
+const decodeCourses = rows => rows.map(decodeCourse)
+
 const decodeLessonsMap = rows => rows.map(decodeLessons)
 
 const decodeCoursesInJourney = rows => rows.map(decodeCourseInJourney)
@@ -63,7 +83,14 @@ const Repository = () => {
       .where('course_id', id)
       .then(decodeLessonsMap)
 
+  const listCourses = () =>
+      knex
+        .select('*')
+        .from('courses')
+        .then(decodeCourses)
+
   return {
+    listCourses,
     getACourseInAJorney,
     getAllCoursesInAJorney,
     getLessonsInACourse

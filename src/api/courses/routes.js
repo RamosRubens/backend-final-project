@@ -49,6 +49,12 @@ const prepareCourseObject = (courses, lessons) => ({
   lessons: lessons
 })
 
+const listCourses = async(_req, res) =>
+  repository
+    .listCourses()
+    .then(courses => res.status(200).send({courses}))
+
+router.get('/', withAsyncErrorHandler(listCourses))
 router.get('/:id/lessons', validate(GetCoursesInJourneySchema), withAsyncErrorHandler(getCourse))
 router.get('/:id', validate(GetCoursesInJourneySchema), withAsyncErrorHandler(getCoursesInJourney))
 
