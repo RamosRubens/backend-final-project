@@ -1,4 +1,3 @@
-console.log(process.env)
 const express = require('express');
 
 const journey = require('./api/journeys/routes')
