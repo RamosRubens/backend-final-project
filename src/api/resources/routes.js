@@ -55,10 +55,7 @@ const getResource = async(req, res) => {
 const postResource = async(req, res) => {
   try {
 
-    const listType = req.body.listType
-
-    console.log(req.body)
-    console.log(listType)
+    const listType =  req.body.listType
 
     validatePost(listType)
 
@@ -107,6 +104,8 @@ const postResource = async(req, res) => {
   }
 }
 
+router.post('/', withAsyncErrorHandler(postResource))
+
 const prepareCompleteObject = (journey, courses) => ({
   id: journey.id,
   name: journey.name,
@@ -120,7 +119,7 @@ const validateRequest = (resourceName, id) => {
 
   if (!Object.values(ParamTypes).includes(resourceName)) {
     throw new NotFoundError({resourceName, id})
- }
+  }
 
   if (resourceName != ParamTypes.JOURNEYS){
     if(id == null || id == undefined || id == "") {
@@ -136,10 +135,9 @@ const validateRequest = (resourceName, id) => {
 }
 
 const validatePost = (paramType) => {
-  console.log(paramType)
   if (!Object.values(ParamTypes).includes(paramType)) {
     throw new NotFoundError({paramType, paramType})
- }
+  }
 }
 
 const prepareCourseObject = (courses, lessons) => ({
@@ -155,6 +153,5 @@ const prepareCourseObject = (courses, lessons) => ({
 })
 
 router.get('/', withAsyncErrorHandler(getResource))
-router.post('/', withAsyncErrorHandler(postResource))
 
 module.exports = router
