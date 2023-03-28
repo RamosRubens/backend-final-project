@@ -57,6 +57,9 @@ const postResource = async(req, res) => {
 
     const listType = req.body.listType
 
+    console.log(req.body)
+    console.log(listType)
+
     validatePost(listType)
 
     switch (listType) {
@@ -133,6 +136,7 @@ const validateRequest = (resourceName, id) => {
 }
 
 const validatePost = (paramType) => {
+  console.log(paramType)
   if (!Object.values(ParamTypes).includes(paramType)) {
     throw new NotFoundError({paramType, paramType})
  }
