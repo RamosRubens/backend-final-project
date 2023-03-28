@@ -1,10 +1,7 @@
 const { Router } = require('express')
-const { any } = require('joi')
-const Joi = require('joi')
 const { NotFoundError, ValidationError } = require('../../errors')
 
 const withAsyncErrorHandler = require('../../middlewares/async-error')
-const validate = require('../../middlewares/validate')
 
 const router = Router()
 
