@@ -1,11 +1,13 @@
+require('dotenv').config()
+
 module.exports = {
   client: 'mysql2',
   connection: process.env.DB_URL,
   seeds: {
-    directory: 'D:\\Projetos\\Estudo\\Node\\final-project\\backend-final-project\\src\\database\\seeds',
+    directory: path.resolve(__dirname, 'src', 'database', 'seeds'),
   },
   migrations: {
-    directory: 'D:\\Projetos\\Estudo\\Node\\final-project\\backend-final-project\\src\\database\\migrations'
+    directory: path.resolve(__dirname, 'src', 'database', 'migrations')
   },
   useNullAsDefault: true
 };
