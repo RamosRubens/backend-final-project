@@ -1,19 +1,11 @@
-const path = require('node:path');
-
 module.exports = {
   client: 'mysql2',
-  connection: {
-    host: 'localhost',
-    port: 3306,
-    user: 'seu_usuario',
-    password: 'sua_senha',
-    database: 'staart-db',
-  },
+  connection: process.env.DB_URL,
   seeds: {
-    directory: path.resolve(__dirname, 'src', 'database', 'seeds'),
+    directory: 'D:\\Projetos\\Estudo\\Node\\final-project\\backend-final-project\\src\\database\\seeds',
   },
   migrations: {
-    directory: path.resolve(__dirname, 'src', 'database', 'migrations')
+    directory: 'D:\\Projetos\\Estudo\\Node\\final-project\\backend-final-project\\src\\database\\migrations'
   },
   useNullAsDefault: true
 };
