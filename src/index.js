@@ -28,6 +28,6 @@ app.get('/', (_, res) => {
   })
 });
 
-app.listen(3333, () => {
+app.listen(process.env.PORT, () => {
   console.log('API executando na porta 3333!')
 });
